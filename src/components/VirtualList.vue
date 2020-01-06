@@ -76,7 +76,13 @@ export default {
     //超过阈值的回调
     topMethod:{
       type:Function,
-      default:function(){
+      default () {
+        return function(){}
+      }
+    },
+		bottomMethod:{
+      type:Function,
+      default () {
         return function(){}
       }
     },
@@ -253,7 +259,7 @@ export default {
 		bottomLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight){
 			if ((this._listData.length <= this.end + 1) && (!this.bottomLoading) && (Math.ceil(scrollTop) >= scrollHeight - offsetHeight)) {
 				this.bottomLoading = true;
-				this.bottomLoadMore();
+				this.bottomMethod();
 			}
 		},
     //设定滚动状态
