@@ -1,0 +1,44 @@
+{
+  "name": "lang-virtual-list-vue",
+  "version": "1.1.0",
+  "description": "lang-virtual-list-vue",
+  "main": "dist/index.min.js",
+  "dependencies": {
+    "@babel/core": "^7.6.4",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/babel-preset-app": "^4.0.2",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "scss-loader": "0.0.1", 
+    "style-loader": "^1.0.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^2.2.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack --display-error-details --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LangWenqi/lang-virtual-list-vue.git"
+  },
+  "keywords": [
+    "vue",
+    "virtual-list"
+  ],
+  "author": "langwenqi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LangWenqi/lang-virtual-list-vue/issues"
+  },
+  "homepage": "https://github.com/LangWenqi/lang-virtual-list-vue#readme"
+}
