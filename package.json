@@ -1,6 +1,6 @@
 {
   "name": "lang-virtual-list-vue",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "description": "lang-virtual-list-vue",
   "main": "dist/index.min.js",
   "dependencies": {
@@ -12,7 +12,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
-    "scss-loader": "0.0.1", 
+    "scss-loader": "0.0.1",
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.2.0",
