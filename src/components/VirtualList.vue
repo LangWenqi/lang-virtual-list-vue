@@ -251,7 +251,8 @@ export default {
 			this.bottomLoading = false;
 		},
 		bottomLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight){
-			if ((this._listData.length <= this.end +1) && (!this.bottomLoading) && (Math.ceil(scrollTop) >= scrollHeight - offsetHeight)) {
+			if ((this._listData.length <= this.end + 1) && (!this.bottomLoading) && (Math.ceil(scrollTop) >= scrollHeight - offsetHeight)) {
+				this.bottomLoading = true;
 				this.bottomLoadMore();
 			}
 		},
