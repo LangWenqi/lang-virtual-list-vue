@@ -3,27 +3,27 @@
     @scroll="scrollEvent($event)"
   >
     <div ref="phantom" class="infinite-list-phantom"></div>
-    <div ref="top" v-if="topLoadMore" v-show="dargState !== 'none' && touchDistance >= 20" class="infinite-top-container">
-      <slot name="top" :dargState="dargState" :dargDistance="touchDistance">
+    <div ref="top" v-if="topLoadMore" v-show="dragState !== 'none' && touchDistance >= 20" class="infinite-top-container">
+      <slot name="top" :dragState="dragState" :dargDistance="touchDistance">
         <div class="infinite-top-content" :style="{color:topTextColor}">
-          <span class="infinite-top-content-icon icon-arrow" :class="dargState === 'drop' ? 'icon-reverse':''" v-if="dargState === 'pull' || dargState === 'drop'">
+          <span class="infinite-top-content-icon icon-arrow" :class="dragState === 'drop' ? 'icon-reverse':''" v-if="dragState === 'pull' || dragState === 'drop'">
             <svg t="1572934878285" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4245" width="24" height="24">
               <path d="M548.352 241.152L716.8 409.6a32.768 32.768 0 0 1 0 46.592 30.72 30.72 0 0 1-45.568 0l-116.736-115.2v464.896a32.768 32.768 0 1 1-65.024 0V340.992L372.736 460.8a39.424 39.424 0 0 1-45.568-6.656 32.768 32.768 0 0 1 0-46.592l162.816-166.4a35.328 35.328 0 0 1 58.368 0z" :fill="topTextColor" p-id="4246"></path>
             </svg>
           </span>
-          <span class="infinite-top-content-icon icon-revolve" v-if="dargState === 'loading'">
+          <span class="infinite-top-content-icon icon-revolve" v-if="dragState === 'loading'">
             <svg class="icon" t="1572936012117" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9195" width="32" height="32">
               <path d="M527.36 225.28h-30.72c-8.192 0-15.36 7.168-15.36 15.36v133.12c0 8.192 7.168 15.36 15.36 15.36h30.72c8.192 0 15.36-7.168 15.36-15.36v-133.12c0-8.192-7.168-15.36-15.36-15.36z m256 256h-133.12c-8.192 0-15.36 7.168-15.36 15.36v30.72c0 8.192 7.168 15.36 15.36 15.36h133.12c8.192 0 15.36-7.168 15.36-15.36v-30.72c0-8.192-7.168-15.36-15.36-15.36z m-256 153.6h-30.72c-8.192 0-15.36 7.168-15.36 15.36v133.12c0 8.192 7.168 15.36 15.36 15.36h30.72c8.192 0 15.36-7.168 15.36-15.36v-133.12c0-8.192-7.168-15.36-15.36-15.36zM389.12 527.36v-30.72c0-8.192-7.168-15.36-15.36-15.36h-133.12c-8.192 0-15.36 7.168-15.36 15.36v30.72c0 8.192 7.168 15.36 15.36 15.36h133.12c8.192 0 15.36-7.168 15.36-15.36z m220.16-91.136c6.144 6.144 15.36 6.144 21.504 0l94.208-94.208c6.144-6.144 6.144-15.36 0-21.504l-21.504-21.504c-6.144-6.144-15.36-6.144-21.504 0l-94.208 94.208c-6.144 6.144-6.144 15.36 0 21.504l21.504 21.504z m22.528 151.552c-6.144-6.144-15.36-6.144-21.504 0l-21.504 21.504c-6.144 6.144-6.144 15.36 0 21.504l94.208 94.208c6.144 6.144 15.36 6.144 21.504 0l21.504-21.504c6.144-6.144 6.144-15.36 0-21.504l-94.208-94.208z m-217.088 0c-6.144-6.144-15.36-6.144-21.504 0l-94.208 94.208c-6.144 6.144-6.144 15.36 0 21.504l21.504 21.504c6.144 6.144 15.36 6.144 21.504 0l94.208-94.208c6.144-6.144 6.144-15.36 0-21.504l-21.504-21.504z m-72.704-289.792c-6.144-6.144-15.36-6.144-21.504 0l-21.504 21.504c-6.144 6.144-6.144 15.36 0 21.504l94.208 94.208c6.144 6.144 15.36 6.144 21.504 0l21.504-21.504c6.144-6.144 6.144-15.36 0-21.504l-94.208-94.208z" :fill="topTextColor" p-id="9196"></path>
             </svg>
           </span>
           <span class="infinite-top-content-title">
-            <template v-if="dargState === 'pull'">
+            <template v-if="dragState === 'pull'">
               {{topPullText}}
             </template>
-            <template v-if="dargState === 'drop'">
+            <template v-if="dragState === 'drop'">
                {{topDropText}}
             </template>
-            <template v-if="dargState === 'loading'">
+            <template v-if="dragState === 'loading'">
               {{topLoadingText}}
             </template>
           </span>
@@ -65,6 +65,11 @@ export default {
     },
     //是否开启下拉刷新
     topLoadMore:{
+      type:Boolean,
+      default:false
+    },
+		//是否开启下拉刷新
+    bottomLoadMore:{
       type:Boolean,
       default:false
     },
@@ -122,7 +127,6 @@ export default {
       type:Number, 
       default:1
     },
-    //容器高度 100px or 50vh
     height:{
       type:String,
       default:'100%'
@@ -135,7 +139,8 @@ export default {
       // drop 距离达到 topDistance 释放触发 topMethod
       // loading 已被释放，topMethod 已经执行
       // none 拖拽完成或未触发
-      dargState:'none', 
+      dragState:'none', 
+      bottomLoading: false, 
       //当前下拉距离
       touchDistance:0,
       //是否正在滚动
@@ -215,7 +220,7 @@ export default {
     }
   },
   updated(){
-    if(this.dargState !== 'none'){
+    if(this.dragState !== 'none'){
       return;
     }
     //列表数据长度不等于缓存长度
@@ -236,17 +241,32 @@ export default {
     })
   },
   methods: {
+		bottomLoadMoreFuc () {
+			let scrollTop=this.$refs.content.scrollTop;
+			let scrollHeight=this.$refs.content.scrollHeight;
+			let offsetHeight=this.$refs.content.offsetHeight
+			this.bottomLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight);
+		},
+		onBottomLoaded() {
+			this.bottomLoading = false;
+		},
+		bottomLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight){
+			if ((this._listData.length <= this.end +1) && (!this.bottomLoading) && (Math.ceil(scrollTop) >= scrollHeight - offsetHeight)) {
+				this.bottomLoadMore();
+			}
+		},
     //设定滚动状态
     setScrollState(flg = false){
       this.scrolling = flg;
     },
     //防抖处理，设置滚动状态 
     scrollEnd:_.debounce(function(event,data){
-      this.setScrollState(false)
-      this.onScrollEnd && this.onScrollEnd(event,data);
+      this.setScrollState(false);
+      this.onScrollEnd && this.onScrollEnd(event, data);
+			this.bottomLoadMoreFuc(); 
     },100),
     scrollingEvent:function(event,data){
-      this.onScroll && this.onScroll(event,data)
+      this.onScroll && this.onScroll(event, data)
     },
     //初始化缓存
     initPositions(){
@@ -316,7 +336,7 @@ export default {
         startOffset = 0;
       }
       this.startOffset = startOffset;
-      this.$refs.content.style.transform = `translate3d(0,${startOffset}px,0)`
+      this.$refs.content.style.transform = `translate3d(0, ${startOffset}px, 0)`
     },
     //滚动事件
     scrollEvent(event) {
@@ -365,7 +385,7 @@ export default {
         return;
       }
       //暂时这样处理 loading 中不可滚动
-      if(this.dargState === 'loading'){
+      if(this.dragState === 'loading'){
         event.preventDefault();
         return ;
       }
@@ -384,13 +404,13 @@ export default {
 
         //未达到阈值
         if(distance < this.topDistance){
-          this.dargState = 'pull'
-          this.$emit('top-status-change', this.dargState,distance)
+          this.dragState = 'pull'
+          this.$emit('top-status-change', this.dragState,distance)
         }
         //已达到阈值
         if(distance >= this.topDistance){
-          this.dargState = 'drop'
-          this.$emit('top-status-change', this.dargState,distance)
+          this.dragState = 'drop'
+          this.$emit('top-status-change', this.dragState,distance)
         }
         //设定偏移距离
         if(distance <= this.maxDistance || !this.maxDistance){
@@ -411,13 +431,13 @@ export default {
         let distance = ~~(this.touchDistance / this.distanceScale)
         //未达到阈值
         if(distance < this.topDistance){
-          this.dargState = 'pull'
-          this.$emit('top-status-change', this.dargState,distance)
+          this.dragState = 'pull'
+          this.$emit('top-status-change', this.dragState,distance)
         }
         //已达到阈值
         if(distance >= this.topDistance){
-          this.dargState = 'drop'
-          this.$emit('top-status-change', this.dargState,distance)
+          this.dragState = 'drop'
+          this.$emit('top-status-change', this.dragState,distance)
         }
         //设定偏移距离
         if(distance <= this.maxDistance || !this.maxDistance){
@@ -436,25 +456,25 @@ export default {
       if(!this.topLoadMore){
         return;
       }
-      if(this.dargState !== 'pull' && this.dargState !== 'drop'){
+      if(this.dragState !== 'pull' && this.dragState !== 'drop'){
         return ;
       }
-      if(this.dargState === 'pull'){
+      if(this.dragState === 'pull'){
         setTimeout(()=>{
-            this.dargState = 'none'
+            this.dragState = 'none'
         },300);
         this.touchDistance = 0;
       }
-      if(this.dargState === 'drop'){
+      if(this.dragState === 'drop'){
         setTimeout(()=>{
-            this.dargState = 'loading'
+            this.dragState = 'loading'
         },300);
         //将距离变更为阈值点 - 20
         this.touchDistance = (this.topDistance - 20) * this.distanceScale;
         this.topMethod && this.topMethod();
       }
 
-      this.$emit('top-status-change', this.dargState,~~(this.touchDistance / this.distanceScale))
+      this.$emit('top-status-change', this.dragState,~~(this.touchDistance / this.distanceScale))
       this.$refs.content.style.transition = `transform 0.3s`
       this.$refs.content.style.transform = `translate3d(0,${~~(this.touchDistance / this.distanceScale)}px,0)`
       this.$refs.top.style.transition = `height 0.3s`
@@ -464,14 +484,14 @@ export default {
           this.$refs.top.style.transition = ``
       },350);
     },
-    onBottomLoaded(){
+    onTopLoaded(){
       this.touchDistance = 0;
-      this.$emit('top-status-change', this.dargState,~~(this.touchDistance / this.distanceScale))
+      this.$emit('top-status-change', this.dragState,~~(this.touchDistance / this.distanceScale))
       this.$refs.content.style.transition = `transform 0.2s`
       this.$refs.content.style.transform = `translate3d(0,${~~(this.touchDistance / this.distanceScale)}px,0)`
       this.$refs.top.style.transition = `height 0.2s`
       this.$refs.top.style.height = `0px`
-      this.dargState = 'none'
+      this.dragState = 'none'
       setTimeout(()=>{
           this.$refs.content.style.transition = ``
           this.$refs.top.style.transition = ``
