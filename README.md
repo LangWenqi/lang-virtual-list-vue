@@ -14,20 +14,20 @@ npm install lang-virtual-list-vue --save
 
 ```html
 <template>
-    <VirtualList
+    <virtual-list
         :list-data="data"
         :estimated-item-size="100"
         v-slot="slotProps"
     >
-        <div class="context">
+        <div>
             {{ slotProps.item.value }}
         </div>
-    </VirtualList>
+    </virtual-list>
 </template>
 ```
 
 ```javascript
-import VirtualList from 'vue-virtual-listview'
+import virtualList from 'lang-virtual-list-vue'
 
 export default{
     data(){
@@ -42,7 +42,7 @@ export default{
         ]
     },
     component:{
-        VirtualList
+        virtualList
     }
 }
 
@@ -53,7 +53,7 @@ export default{
 
 ```html
 <template>
-    <VirtualList
+    <virtual-list
         ref="vlist"
         :list-data="data"
         :estimated-item-size="100"
@@ -64,12 +64,12 @@ export default{
         <div class="context">
             {{ slotProps.item.value }}
         </div>
-    </VirtualList>
+    </virtual-list>
 </template>
 ```
 
 ```javascript
-import VirtualList from 'vue-virtual-listview'
+import virtualList from 'lang-virtual-list-vue'
 
 export default{
     data(){
@@ -99,7 +99,7 @@ export default{
         },
     },
     component:{
-        VirtualList
+        virtualList
     }
 }
 
