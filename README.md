@@ -20,7 +20,7 @@ npm install lang-virtual-list-vue --save
         v-slot="slotProps"
     >
         <div>
-            {{ slotProps.item.value }}
+            {{ slotProps.item }}{{ slotProps.index }}
         </div>
     </virtual-list>
 </template>
@@ -31,15 +31,12 @@ import virtualList from 'lang-virtual-list-vue'
 
 export default{
     data(){
-        return [
-            {
-                value:'Est quo tempora consequatur......'
-            },
-            {
-                value:'Excepturi magni hic deserunt......'
-            }
-            //.....
-        ]
+			return {
+				data: [
+					'This is mounted demo1',
+					'This is mounted demo2'
+				]
+			}
     },
     component:{
         virtualList
@@ -61,8 +58,8 @@ export default{
         :top-method="update"
         v-slot="slotProps"
     >
-        <div class="context">
-            {{ slotProps.item.value }}
+        <div>
+            {{ slotProps.item }}{{ slotProps.index }}
         </div>
     </virtual-list>
 </template>
@@ -73,29 +70,21 @@ import virtualList from 'lang-virtual-list-vue'
 
 export default{
     data(){
-        return [
-            {
-                value:'Est quo tempora consequatur......'
-            },
-            {
-                value:'Excepturi magni hic deserunt......'
-            }
-            //.....
-        ]
+        return {
+					data: [
+						'This is mounted demo1',
+						'This is mounted demo2'
+					]
+				}
     },
     methods:{
         update(){
             let data = [
-                {
-                    value:'This is one demo~'
-                },
-                {
-                    value:'This is tow demo~'
-                }
-                //.....
+							'This is update demo1',
+							'This is update demo2'
             ];
             this.data = data;
-            this.$refs.vlist.onBottomLoaded();
+            this.$refs.vlist.onTopLoaded();
         },
     },
     component:{
@@ -121,15 +110,18 @@ export default{
 |maxDistance|Number|0||组件可移动的最大距离（像素），若为 0 则不限制|
 |distanceScale|Number|2||手指移动与组件移动距离的比值|
 |topTextColor|String|#000000||刷新区域的文本颜色|
-|topPullText|String|上拉刷新||刷新状态为pull时提示区的文字|
+|topPullText|String|下拉刷新||刷新状态为pull时提示区的文字|
 |topDropText|String|释放更新||刷新状态为drop时提示区的文字|
 |topLoadingText|String|加载中...||刷新状态为loading时提示区的文字|
+|bottomLoadingText|String|加载中...||上滑加载更多状态为loading时提示区的文字|
 
 ## 事件
 
 |事件名称|回调参数|说明|
 |:--:|:--:|:--:|
 |top-status-change|顶部刷新区域状态变更时触发|提示区域状态|
+|onTopLoaded|绑定ref后下拉加载数据后手动触发|取消loading状态|
+|onBottomLoaded|绑定ref后上滑加载数据后手动触发|取消loading状态|
 
 ## 提示区状态说明
 
