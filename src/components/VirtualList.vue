@@ -1,5 +1,5 @@
 <template>
-  <div ref="list" :style="{height}" class="infinite-list-container" 
+  <div ref="list" :style="{height}" :class="hideScrollBar ? 'infinite-list-container-no-scroll' : 'infinite-list-container'" 
     @scroll="scrollEvent($event)"
   >
     <div ref="phantom" class="infinite-list-phantom"></div>
@@ -63,6 +63,11 @@ import _ from '../util'
 export default {
   name:'VirtualList',
   props: {
+		// 是否隐藏滚动条
+		hideScrollBar: {
+			type: Boolean,
+			default: false
+		},
     //所有列表数据
     listData:{
       type:Array,
@@ -284,7 +289,9 @@ export default {
     scrollEnd:_.debounce(function(event,data){
       this.setScrollState(false);
       this.onScrollEnd && this.onScrollEnd(event, data);
-			this.bottomLoadMoreFuc(); 
+			if (this.bottomLoadMore) {
+				this.bottomLoadMoreFuc(); 
+			}
     },100),
     scrollingEvent:function(event,data){
       this.onScroll && this.onScroll(event, data)
@@ -573,6 +580,24 @@ export default {
   overflow-y: auto;
   position: relative;
   -webkit-overflow-scrolling: touch;
+}
+.infinite-list-container::-webkit-scrollbar{
+	width: 5px;
+	height: 1px;
+	background-color: transparent;
+}
+
+.infinite-list-container-no-scroll {
+  overflow-x:hidden;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.infinite-list-container-no-scroll::-webkit-scrollbar{
+	width: 0px;
+	height: 1px;
+	background-color: transparent;
 }
 
 .infinite-list-phantom {
