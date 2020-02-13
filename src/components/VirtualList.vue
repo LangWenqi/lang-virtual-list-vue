@@ -283,10 +283,19 @@ export default {
     })
   },
   methods: {
+    scrollToPosition (index) {
+      this.$refs.list.scrollTop = this.positions[index] ? this.positions[index].top : 0;
+    },
+    scrollToTop () {
+      this.$refs.list.scrollTop = 0;
+    },
+    scrollToBottom () {
+      this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
+    },
     scrollTopLoadMoreFuc () {
 			let scrollTop=this.$refs.list.scrollTop;
 			let scrollHeight=this.$refs.list.scrollHeight;
-			let offsetHeight=this.$refs.list.offsetHeight
+			let offsetHeight=this.$refs.list.offsetHeight;
 			this.scrollTopLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight);
 		},
 		onscrollTopLoaded(moreNum) {
@@ -300,9 +309,9 @@ export default {
 			}
 		},
 		bottomLoadMoreFuc () {
-			let scrollTop=this.$refs.content.scrollTop;
-			let scrollHeight=this.$refs.content.scrollHeight;
-			let offsetHeight=this.$refs.content.offsetHeight
+			let scrollTop=this.$refs.list.scrollTop;
+			let scrollHeight=this.$refs.list.scrollHeight;
+			let offsetHeight=this.$refs.list.offsetHeight;
 			this.bottomLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight);
 		},
 		onBottomLoaded() {
