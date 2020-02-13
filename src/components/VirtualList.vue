@@ -83,6 +83,11 @@ export default {
       type:Boolean,
       default:false
     },
+    //是否开启下拉刷新
+    scrollTopLoadMore:{
+      type:Boolean,
+      default:false
+    },
 		//是否开启下拉刷新
     bottomLoadMore:{
       type:Boolean,
@@ -96,6 +101,12 @@ export default {
       }
     },
 		bottomMethod:{
+      type:Function,
+      default () {
+        return function(){}
+      }
+    },
+    scrollTopMethod:{
       type:Function,
       default () {
         return function(){}
@@ -165,7 +176,8 @@ export default {
       // loading 已被释放，topMethod 已经执行
       // none 拖拽完成或未触发
       dragState:'none', 
-      bottomLoading: false, 
+      bottomLoading: false,
+      scrollTopLoading: false,
       //当前下拉距离
       touchDistance:0,
       //是否正在滚动
@@ -176,6 +188,7 @@ export default {
       start:0,
       //结束索引
       end:0,
+      moreNum: 0
     };
   },
   computed:{
@@ -261,11 +274,31 @@ export default {
       //更新列表总高度
       let height = this.positions[this.positions.length - 1].bottom;
       this.$refs.phantom.style.height = height + 'px'
+      if (this.moreNum) {
+        this.$refs.list.scrollTop = this.$refs.list.scrollTop + this.moreNum*this.estimatedItemSize
+        this.moreNum = 0;
+      }
       //更新真实偏移量
       this.setStartOffset();
     })
   },
   methods: {
+    scrollTopLoadMoreFuc () {
+			let scrollTop=this.$refs.list.scrollTop;
+			let scrollHeight=this.$refs.list.scrollHeight;
+			let offsetHeight=this.$refs.list.offsetHeight
+			this.scrollTopLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight);
+		},
+		onscrollTopLoaded(moreNum) {
+      this.scrollTopLoading = false;
+      this.moreNum = moreNum;
+		},
+		scrollTopLoadMoreCallBack(scrollTop, scrollHeight, offsetHeight){
+			if (scrollTop <= 0 && scrollHeight > offsetHeight && (!this.scrollTopLoading)) {
+				this.scrollTopLoading = true;
+				this.scrollTopMethod();
+			}
+		},
 		bottomLoadMoreFuc () {
 			let scrollTop=this.$refs.content.scrollTop;
 			let scrollHeight=this.$refs.content.scrollHeight;
@@ -291,7 +324,10 @@ export default {
       this.onScrollEnd && this.onScrollEnd(event, data);
 			if (this.bottomLoadMore) {
 				this.bottomLoadMoreFuc(); 
-			}
+      }
+      if (this.scrollTopLoadMore) {
+        this.scrollTopLoadMoreFuc();
+      }
     },100),
     scrollingEvent:function(event,data){
       this.onScroll && this.onScroll(event, data)
