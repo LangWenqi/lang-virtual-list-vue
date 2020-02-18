@@ -284,6 +284,9 @@ export default {
   },
   methods: {
     isToBottom () {
+      return this.$refs.list.scrollHeight - this.$refs.list.scrollTop === this.$refs.list.clientHeight;
+    },
+    isToTrueBottom () {
       return this.$refs.list.scrollTop > 0 && this.$refs.list.scrollHeight - this.$refs.list.scrollTop === this.$refs.list.clientHeight;
     },
     isToTop () {
