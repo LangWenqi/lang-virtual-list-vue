@@ -283,6 +283,21 @@ export default {
     })
   },
   methods: {
+    isToBottom () {
+      return this.$refs.list.scrollTop > 0 && this.$refs.list.scrollHeight - this.$refs.list.scrollTop === this.$refs.list.clientHeight;
+    },
+    isToTop () {
+      return this.$refs.list.scrollTop <= 0;
+    },
+    getScrollTop () {
+      return this.$refs.list.scrollTop;
+    },
+    getStart () {
+      return this.start;
+    },
+    getEnd() {
+      return this.end;
+    },
     scrollToPosition (index) {
       this.$refs.list.scrollTop = this.positions[index] ? this.positions[index].top : 0;
     },
