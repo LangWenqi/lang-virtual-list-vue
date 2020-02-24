@@ -284,10 +284,10 @@ export default {
   },
   methods: {
     isToBottom () {
-      return this.$refs.list.scrollHeight - this.$refs.list.scrollTop === this.$refs.list.clientHeight;
+      return this.$refs.list.scrollHeight - this.$refs.list.scrollTop <= this.$refs.list.clientHeight;
     },
     isToTrueBottom () {
-      return this.$refs.list.scrollTop > 0 && this.$refs.list.scrollHeight - this.$refs.list.scrollTop === this.$refs.list.clientHeight;
+      return this.$refs.list.scrollTop > 0 && this.isToBottom();
     },
     isToTop () {
       return this.$refs.list.scrollTop <= 0;
@@ -308,7 +308,7 @@ export default {
       this.$refs.list.scrollTop = 0;
     },
     scrollToBottom () {
-      this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
+      this.$refs.list.scrollTop = this.$refs.list.scrollHeight * (this.bufferScale + 1);
     },
     scrollTopLoadMoreFuc () {
 			let scrollTop=this.$refs.list.scrollTop;
