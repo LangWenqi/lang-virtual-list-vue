@@ -644,11 +644,11 @@ export default {
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
-.infinite-list-container::-webkit-scrollbar{
+/* .infinite-list-container::-webkit-scrollbar{
 	width: 5px;
 	height: 1px;
 	background-color: transparent;
-}
+} */
 
 .infinite-list-container-no-scroll {
   overflow-x:hidden;
