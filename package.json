@@ -1,6 +1,6 @@
 {
   "name": "lang-virtual-list-vue",
-  "version": "1.1.2",
+  "version": "1.1.7",
   "description": "lang-virtual-list-vue",
   "main": "dist/index.min.js",
   "dependencies": {

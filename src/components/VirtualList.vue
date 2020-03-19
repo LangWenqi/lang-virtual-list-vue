@@ -283,6 +283,18 @@ export default {
     })
   },
   methods: {
+    refreshComponent () {
+      Object.assign(this.$data, this.$options.data());
+      this.initPositions();
+      this.setScrollState(false);
+      if (this.$refs.list) {
+        this.$refs.list.scrollTop = 0;
+      }
+      this.screenHeight = this.$el.clientHeight;
+      this.start = 0;
+      this.end = this.start + this.visibleCount;
+      this.setStartOffset();
+    },
     isToBottom () {
       return this.$refs.list.scrollHeight - this.$refs.list.scrollTop <= this.$refs.list.clientHeight;
     },
