@@ -208,7 +208,7 @@ export default {
       },[])
     },
     anchorPoint(){
-      return this.positions.length ? this.positions[this.start] : null;
+      return this.positions.length ? this.positions[this.start] : { top: 0, bottom: 0 };
     },
     visibleCount(){
       return Math.ceil(this.screenHeight / this.estimatedItemSize);
